@@ -1,0 +1,147 @@
+SQL*Plus: Release 11.2.0.4.0 Production on Tue Jan 25 10:30:12 2022
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+Enter user-name: RA1911003010664/RA1911003010664@drtsenthil-b2.c6hfisyr3ugy.us-east-1.rds.amazonaws.com:1521/b2
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+
+SQL> create table cse2(rollnumber varchar(10),name varchar(50));
+
+Table created.
+
+SQL> insert into cse2 values(1001,'Parthib');
+
+1 row created.
+
+SQL> insert into cse2 values(1002,'Satyam');
+
+1 row created.
+
+SQL> insert into cse2 values(1003,'Rita');
+
+1 row created.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+1001       Parthib
+1002       Satyam
+1003       Rita
+
+SQL> desc cse2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUMBER                                         VARCHAR2(10)
+ NAME                                               VARCHAR2(50)
+
+SQL> insert into cse2 values('1004','Rajesh');
+
+1 row created.
+
+SQL> insert into cse2 values('1005','Dhanashree');
+
+1 row created.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+1001       Parthib
+1002       Satyam
+1003       Rita
+1004       Rajesh
+1005       Dhanashree
+
+SQL> desc cse2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLLNUMBER                                         VARCHAR2(10)
+ NAME                                               VARCHAR2(50)
+
+SQL> update cse2 set name='Scarlet';
+
+5 rows updated.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+1001       Scarlet
+1002       Scarlet
+1003       Scarlet
+1004       Scarlet
+1005       Scarlet
+
+SQL> update cse2 set name='Chris' where rollnumber='1002';
+
+1 row updated.
+
+SQL> update cse2 set name='Parthib' where rollnumber='1001';
+
+1 row updated.
+
+SQL> update cse2 set name='Rita' where rollnumber='1004';
+
+1 row updated.
+
+SQL> update cse2 set name='Satyam' where rollnumber='1005';
+
+1 row updated.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+1001       Parthib
+1002       Chris
+1003       Scarlet
+1004       Rita
+1005       Satyam
+
+SQL> alter table cse2 add(city varchar(40));
+
+Table altered.
+
+SQL> update cse2 set city='chennai';
+
+5 rows updated.
+
+SQL> update cse2 set city='New York' where roll number='1003';
+update cse2 set city='New York' where roll number='1003'
+                                           *
+ERROR at line 1:
+ORA-00920: invalid relational operator
+
+
+SQL> update cse2 set city='New York' where rollnumber='1003';
+
+1 row updated.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1001       Parthib
+chennai
+
+1002       Chris
+chennai
+
+1003       Scarlet
+New York
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1004       Rita
+chennai
+
+1005       Satyam
+chennai
