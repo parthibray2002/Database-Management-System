@@ -1,0 +1,372 @@
+SQL*Plus: Release 11.2.0.4.0 Production on Wed Feb 2 10:26:03 2022
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+Enter user-name: RA1911003010664/RA1911003010664@drtsenthil-b2.c6hfisyr3ugy.us-east-1.rds.amazonaws.com:1521/b2
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1001       Parthib
+
+
+1002       Chris
+
+
+1003       Scarlet
+
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1004       Rita
+
+
+1005       Satyam
+
+
+
+SQL> savepoint s3;
+
+Savepoint created.
+
+SQL> update cse2 set city='NewYork';
+
+5 rows updated.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1001       Parthib
+NewYork
+
+1002       Chris
+NewYork
+
+1003       Scarlet
+NewYork
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1004       Rita
+NewYork
+
+1005       Satyam
+NewYork
+
+
+SQL> insert into cse2 values('1006','Shruti','Nagpur');
+
+1 row created.
+
+SQL> insert into cse2 values('1007','Chirag','Mumbai');
+
+1 row created.
+
+SQL> insert into cse2 values('1008','Allu','Hyderabad');
+
+1 row created.
+
+SQL> rollback s3;
+rollback s3
+         *
+ERROR at line 1:
+ORA-02181: invalid option to ROLLBACK WORK
+
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1001       Parthib
+
+
+1002       Chris
+
+
+1003       Scarlet
+
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1004       Rita
+
+
+1005       Satyam
+
+
+
+SQL> update cse2 set city='NewYork';
+
+5 rows updated.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1001       Parthib
+NewYork
+
+1002       Chris
+NewYork
+
+1003       Scarlet
+NewYork
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1004       Rita
+NewYork
+
+1005       Satyam
+NewYork
+
+
+SQL> insert into cse2 values('1006','Shruti','Nagpur');
+
+1 row created.
+
+SQL> insert into cse2 values('1007','Chirag','Mumbai');
+
+1 row created.
+
+SQL> insert into cse2 values('1008','Allu','Hyderabad');
+
+1 row created.
+
+SQL> insert into cse2 values('1009','Tom','London');
+
+1 row created.
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1006       Shruti
+Nagpur
+
+1007       Chirag
+Mumbai
+
+1008       Allu
+Hyderabad
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1009       Tom
+London
+
+1001       Parthib
+NewYork
+
+1002       Chris
+NewYork
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1003       Scarlet
+NewYork
+
+1004       Rita
+NewYork
+
+1005       Satyam
+NewYork
+
+
+9 rows selected.
+
+SQL> set linesize=200;
+SP2-0268: linesize option not a valid number
+SQL> set linesize 200;
+SQL> select * from cse2;
+
+ROLLNUMBER NAME                                               CITY
+---------- -------------------------------------------------- ----------------------------------------
+1006       Shruti                                             Nagpur
+1007       Chirag                                             Mumbai
+1008       Allu                                               Hyderabad
+1009       Tom                                                London
+1001       Parthib                                            NewYork
+1002       Chris                                              NewYork
+1003       Scarlet                                            NewYork
+1004       Rita                                               NewYork
+1005       Satyam                                             NewYork
+
+9 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> rollback to s3;
+rollback to s3
+*
+ERROR at line 1:
+ORA-01086: savepoint 'S3' never established in this session or is invalid
+
+
+SQL> select 8 from cse2 order by rollnumber asc;
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+
+9 rows selected.
+
+SQL> select * from cse2 order by rollnumber asc;
+
+ROLLNUMBER NAME                                               CITY
+---------- -------------------------------------------------- ----------------------------------------
+1001       Parthib                                            NewYork
+1002       Chris                                              NewYork
+1003       Scarlet                                            NewYork
+1004       Rita                                               NewYork
+1005       Satyam                                             NewYork
+1006       Shruti                                             Nagpur
+1007       Chirag                                             Mumbai
+1008       Allu                                               Hyderabad
+1009       Tom                                                London
+
+9 rows selected.
+
+SQL> select * from cse2 orderby(city);
+select * from cse2 orderby(city)
+                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select * from cse2 groupby(city);
+select * from cse2 groupby(city)
+                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select name,sum(rollnumber),city from cse2 group by city;
+select name,sum(rollnumber),city from cse2 group by city
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select name,sum(rollnumber) from cse2 group by city;
+select name,sum(rollnumber) from cse2 group by city
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select sum(rollnumber),city from cse2 group by city;
+
+SUM(ROLLNUMBER) CITY
+--------------- ----------------------------------------
+           1008 Hyderabad
+           1009 London
+           5015 NewYork
+           1007 Mumbai
+           1006 Nagpur
+
+SQL> select name,city from cse2 group by city;
+select name,city from cse2 group by city
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select city,count(*) from cse2 group by having count(dept)>=2;
+select city,count(*) from cse2 group by having count(dept)>=2
+                                        *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select city,count(*) from cse2 group by having count(city)>=2;
+select city,count(*) from cse2 group by having count(city)>=2
+                                        *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select city,count(*) from cse2 group by city having count(city)>=2;
+
+CITY                                       COUNT(*)
+---------------------------------------- ----------
+NewYork                                           5
+
+SQL> select sum(rollnumber) from cse2;
+
+SUM(ROLLNUMBER)
+---------------
+           9045
+
+SQL> select max(rollnumber) from cse2;
+
+MAX(ROLLNU
+----------
+1009
+
+SQL> select avg(rollnumber) from cse2;
+
+AVG(ROLLNUMBER)
+---------------
+           1005
+
+SQL> select count(name) from cse2;
+
+COUNT(NAME)
+-----------
+          9
+
+SQL> selct min(rollnumber) from cse2;
+SP2-0734: unknown command beginning "selct min(..." - rest of line ignored.
+SQL> select min(rollnumber) from cse2;
+
+MIN(ROLLNU
+----------
+1001
