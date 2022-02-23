@@ -1,0 +1,159 @@
+SQL*Plus: Release 11.2.0.4.0 Production on Wed Feb 16 11:09:05 2022
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+Enter user-name: create table cse6(rno varchar(10) primary key,name varchar(30));
+SP2-0306: Invalid option.
+Usage: CONN[ECT] [{logon|/|proxy} [AS {SYSDBA|SYSOPER|SYSASM}] [edition=value]]
+where <logon> ::= <username>[/<password>][@<connect_identifier>]
+      <proxy> ::= <proxyuser>[<username>][/<password>][@<connect_identifier>]
+Enter user-name: RA1911003010664/RA1911003010664@drtsenthil-b2.c6hfisyr3ugy.us-east-1.rds.amazonaws.com:1521/b2
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+
+SQL> create table cse6(rno varchar(10) primary key,name varchar(30));
+
+Table created.
+
+SQL> insert into cse6 values('RA23456','Gulati');
+
+1 row created.
+
+SQL> insert into cse 6 values('RA56890','Karthik');
+insert into cse 6 values('RA56890','Karthik')
+                *
+ERROR at line 1:
+ORA-00926: missing VALUES keyword
+
+
+SQL>  insert into cse6 values('RA56890','Karthik');
+
+1 row created.
+
+SQL>  insert into cse6 values('RA36890','');
+
+1 row created.
+
+SQL>  insert into cse 6 values('','Gautam');
+ insert into cse 6 values('','Gautam')
+                 *
+ERROR at line 1:
+ORA-00926: missing VALUES keyword
+
+
+SQL> select * from cse 6;
+select * from cse 6
+                  *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL>  select * from cse6;
+
+RNO        NAME
+---------- ------------------------------
+RA23456    Gulati
+RA56890    Karthik
+RA36890
+
+SQL> create table cmarks1(rno varchar(10),subject varchar(20),marks varchar(5), foreign key(rno) references cse6(rno));
+
+Table created.
+
+SQL>  alter table cmarks add constraint p2 primary key(subject);
+ alter table cmarks add constraint p2 primary key(subject)
+                                      *
+ERROR at line 1:
+ORA-02260: table can have only one primary key
+
+
+SQL>  alter table cmarks1 add constraint p2 primary key(subject);
+ alter table cmarks1 add constraint p2 primary key(subject)
+                                    *
+ERROR at line 1:
+ORA-02264: name already used by an existing constraint
+
+
+SQL>  alter table cmarks add constraint p3 primary key(subject);
+ alter table cmarks add constraint p3 primary key(subject)
+                                      *
+ERROR at line 1:
+ORA-02260: table can have only one primary key
+
+
+SQL>  alter table cmarks1 add constraint p2 primary key(subject);
+ alter table cmarks1 add constraint p2 primary key(subject)
+                                    *
+ERROR at line 1:
+ORA-02264: name already used by an existing constraint
+
+
+SQL>  alter table cmarks1 add constraint p3 primary key(subject);
+
+Table altered.
+
+SQL> desc cmarks1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ RNO                                                VARCHAR2(10)
+ SUBJECT                                   NOT NULL VARCHAR2(20)
+ MARKS                                              VARCHAR2(5)
+
+SQL> alter table cmarks1 drop constraint p3;
+
+Table altered.
+
+SQL> desc cmarks1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ RNO                                                VARCHAR2(10)
+ SUBJECT                                            VARCHAR2(20)
+ MARKS                                              VARCHAR2(5)
+
+SQL> create table adult(id int,name varchar(20),age int check(age>18));
+
+Table created.
+
+SQL> insert into adult values(456,jetha,4);
+insert into adult values(456,jetha,4)
+                             *
+ERROR at line 1:
+ORA-00984: column not allowed here
+
+
+SQL> insert into adult values(345,'jetha',17);
+insert into adult values(345,'jetha',17)
+*
+ERROR at line 1:
+ORA-02290: check constraint (RA1911003010664.SYS_C006067) violated
+
+
+SQL> insert into adult(234,'babita',23);
+insert into adult(234,'babita',23)
+                  *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> insert into adult values(234,'babita',23);
+
+1 row created.
+
+SQL> insert into adult values(256,'sushant',12);
+insert into adult values(256,'sushant',12)
+*
+ERROR at line 1:
+ORA-02290: check constraint (RA1911003010664.SYS_C006067) violated
+
+
+SQL> insert into adult values(124,'tovino',34);
+
+1 row created.
+
+SQL> desc adult;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ AGE                                                NUMBER(38)

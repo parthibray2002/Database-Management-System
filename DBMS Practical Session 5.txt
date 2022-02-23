@@ -1,0 +1,171 @@
+SQL*Plus: Release 11.2.0.4.0 Production on Wed Feb 23 10:08:48 2022
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+Enter user-name: RA1911003010664/RA1911003010664@drtsenthil-b2.c6hfisyr3ugy.us-east-1.rds.amazonaws.com:1521/b2
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+
+SQL> create view view1 as name,city from cse2;
+create view view1 as name,city from cse2
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1006       Shruti
+Nagpur
+
+1007       Chirag
+Mumbai
+
+1008       Allu
+Hyderabad
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1009       Tom
+London
+
+1001       Parthib
+NewYork
+
+1002       Chris
+NewYork
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1003       Scarlet
+NewYork
+
+1004       Rita
+NewYork
+
+1005       Satyam
+NewYork
+
+
+9 rows selected.
+
+SQL> create view view1 select rollnumber,name from cse2;
+create view view1 select rollnumber,name from cse2
+                  *
+ERROR at line 1:
+ORA-00905: missing keyword
+
+
+SQL> create view view1 as select rollnumber,name from cse2;
+
+View created.
+
+SQL> select * from view1;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+1006       Shruti
+1007       Chirag
+1008       Allu
+1009       Tom
+1001       Parthib
+1002       Chris
+1003       Scarlet
+1004       Rita
+1005       Satyam
+
+9 rows selected.
+
+SQL> create view view2 as select rollnumber,name from cse2 where city="New York";
+create view view2 as select rollnumber,name from cse2 where city="New York"
+                                                                 *
+ERROR at line 1:
+ORA-00904: "New York": invalid identifier
+
+
+SQL>  create view view2 as select rollnumber,name from cse2 where city= 'New York';
+
+View created.
+
+SQL> select * from view2;
+
+no rows selected
+
+SQL> drop view2;
+drop view2
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop view view2;
+
+View dropped.
+
+SQL> create view view2 as select rollnumber,city where name='Scarlet';
+create view view2 as select rollnumber,city where name='Scarlet'
+                                            *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> create view view2 as select rollnumber,city from cse2 where name='Scarlet';
+
+View created.
+
+SQL> select * from view2;
+
+ROLLNUMBER CITY
+---------- ----------------------------------------
+1003       NewYork
+
+SQL> create or replace view view2 as select rollnumber,city,name from cse2 where city='New York';
+
+View created.
+
+SQL> select * from view2;
+
+no rows selected
+
+SQL> create or replace view view2 as select rollnumber,city,name from cse2 where city='NewYork';
+
+View created.
+
+SQL> select * from view2;
+
+ROLLNUMBER CITY
+---------- ----------------------------------------
+NAME
+--------------------------------------------------
+1001       NewYork
+Parthib
+
+1002       NewYork
+Chris
+
+1003       NewYork
+Scarlet
+
+
+ROLLNUMBER CITY
+---------- ----------------------------------------
+NAME
+--------------------------------------------------
+1004       NewYork
+Rita
+
+1005       NewYork
+Satyam
+
+

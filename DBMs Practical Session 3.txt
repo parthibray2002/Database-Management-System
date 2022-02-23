@@ -1,0 +1,303 @@
+SQL*Plus: Release 11.2.0.4.0 Production on Wed Feb 9 09:51:17 2022
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+Enter user-name: RA1911003010664/RA1911003010664@drtsenthil-b2.c6hfisyr3ugy.us-east-1.rds.amazonaws.com:1521/b2
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+
+SQL> select * from cse2;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1006       Shruti
+Nagpur
+
+1007       Chirag
+Mumbai
+
+1008       Allu
+Hyderabad
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1009       Tom
+London
+
+1001       Parthib
+NewYork
+
+1002       Chris
+NewYork
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1003       Scarlet
+NewYork
+
+1004       Rita
+NewYork
+
+1005       Satyam
+NewYork
+
+
+9 rows selected.
+
+SQL> set linesize 200;
+SQL> select 8 from cse2;
+
+         8
+----------
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+         8
+
+9 rows selected.
+
+SQL> set linesize 200;
+SQL> select * from cse2;
+
+ROLLNUMBER NAME                                               CITY
+---------- -------------------------------------------------- ----------------------------------------
+1006       Shruti                                             Nagpur
+1007       Chirag                                             Mumbai
+1008       Allu                                               Hyderabad
+1009       Tom                                                London
+1001       Parthib                                            NewYork
+1002       Chris                                              NewYork
+1003       Scarlet                                            NewYork
+1004       Rita                                               NewYork
+1005       Satyam                                             NewYork
+
+9 rows selected.
+
+SQL> select concat('name','city')namecity from cse2;
+
+NAMECITY
+--------
+namecity
+namecity
+namecity
+namecity
+namecity
+namecity
+namecity
+namecity
+namecity
+
+9 rows selected.
+
+SQL> desc cse2;
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ROLLNUMBER
+            VARCHAR2(10)
+ NAME
+            VARCHAR2(50)
+ CITY
+            VARCHAR2(40)
+
+SQL> select concat(name,city)name_city from cse2;
+
+NAME_CITY
+------------------------------------------------------------------------------------------
+ShrutiNagpur
+ChiragMumbai
+AlluHyderabad
+TomLondon
+ParthibNewYork
+ChrisNewYork
+ScarletNewYork
+RitaNewYork
+SatyamNewYork
+
+9 rows selected.
+
+SQL> select initcap(name) from cse2;
+
+INITCAP(NAME)
+--------------------------------------------------
+Shruti
+Chirag
+Allu
+Tom
+Parthib
+Chris
+Scarlet
+Rita
+Satyam
+
+9 rows selected.
+
+SQL> select length('cse2')from cse;
+select length('cse2')from cse
+                          *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select length('cse2')from dual;
+
+LENGTH('CSE2')
+--------------
+             4
+
+SQL> select length('name') from cse2;
+
+LENGTH('NAME')
+--------------
+             4
+             4
+             4
+             4
+             4
+             4
+             4
+             4
+             4
+
+9 rows selected.
+
+SQL> select abs(-20) from dual;
+
+  ABS(-20)
+----------
+        20
+
+SQL> select cos(45) from dual;
+
+   COS(45)
+----------
+.525321989
+
+SQL> select mod(1009,234) from dual;
+
+MOD(1009,234)
+-------------
+           73
+
+SQL> select pow(120,6) from dual;
+select pow(120,6) from dual
+       *
+ERROR at line 1:
+ORA-00904: "POW": invalid identifier
+
+
+SQL> select power(120,6) from dual;
+
+POWER(120,6)
+------------
+  2.9860E+12
+
+SQL> select power(45,3) from dual;
+
+POWER(45,3)
+-----------
+      91125
+
+SQL> select round(3.4456789,3) from dual;
+
+ROUND(3.4456789,3)
+------------------
+             3.446
+
+SQL> select ltrim('    cse2')from dual;
+
+LTRI
+----
+cse2
+
+SQL> select rtrim('      cse2')from dual;
+
+RTRIM('CSE
+----------
+      cse2
+
+SQL> select upper(name) from cse2;
+
+UPPER(NAME)
+--------------------------------------------------
+SHRUTI
+CHIRAG
+ALLU
+TOM
+PARTHIB
+CHRIS
+SCARLET
+RITA
+SATYAM
+
+9 rows selected.
+
+SQL> select upper(city) from cse2;
+
+UPPER(CITY)
+----------------------------------------
+NAGPUR
+MUMBAI
+HYDERABAD
+LONDON
+NEWYORK
+NEWYORK
+NEWYORK
+NEWYORK
+NEWYORK
+
+9 rows selected.
+
+SQL> selct lower(name,city) from cse2;
+SP2-0734: unknown command beginning "selct lowe..." - rest of line ignored.
+SQL> select lower(name,city) from cse2;
+select lower(name,city) from cse2
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select lower(name) from cse2;
+
+LOWER(NAME)
+--------------------------------------------------
+shruti
+chirag
+allu
+tom
+parthib
+chris
+scarlet
+rita
+satyam
+
+9 rows selected.
+
+SQL> select lower(city) from cse2;
+
+LOWER(CITY)
+----------------------------------------
+nagpur
+mumbai
+hyderabad
+london
+newyork
+newyork
+newyork
+newyork
+newyork
+
+9 rows selected.
