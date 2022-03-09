@@ -1,0 +1,316 @@
+
+SQL*Plus: Release 11.2.0.4.0 Production on Wed Mar 9 10:14:31 2022
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+Enter user-name: RA1911003010664/RA1911003010664@drtsenthil-b2.c6hfisyr3ugy.us-east-1.rds.amazonaws.com:1521/b2
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+
+SQL> select * from cse;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1006       Shruti
+Nagpur
+
+1007       Chirag
+Mumbai
+
+1008       Allu
+Hyderabad
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1009       Tom
+London
+
+1001       Parthib
+NewYork
+
+1002       Chris
+NewYork
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+CITY
+----------------------------------------
+1003       Scarlet
+NewYork
+
+1004       Rita
+NewYork
+
+1005       Satyam
+NewYork
+
+
+9 rows selected.
+
+SQL> select * from marks;
+
+RNO        SUBJECT                                            MARKS
+---------- -------------------------------------------------- ----------
+1001       arts                                               45
+1002       computers                                          70
+1003       liberal arts                                       56
+1004       science                                            76
+1005       mechanics                                          87
+1006       geography                                          60
+1007       dbms                                               75
+1008       cybersecurity                                      65
+1009       ai                                                 81
+
+9 rows selected.
+
+SQL> select cse.rollnumber,cse.name,marks.subject,marks.marks from cse inner join marks on cse.rollnumber=marks.rno;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1001       Parthib
+arts                                               45
+
+1002       Chris
+computers                                          70
+
+1003       Scarlet
+liberal arts                                       56
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1004       Rita
+science                                            76
+
+1005       Satyam
+mechanics                                          87
+
+1006       Shruti
+geography                                          60
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1007       Chirag
+dbms                                               75
+
+1008       Allu
+cybersecurity                                      65
+
+1009       Tom
+ai                                                 81
+
+
+9 rows selected.
+
+SQL> select cse.rollnumber,cse.name,marks.subject,marks.marks from cse left join marks on cse.rollnumber=marks.rno;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1001       Parthib
+arts                                               45
+
+1002       Chris
+computers                                          70
+
+1003       Scarlet
+liberal arts                                       56
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1004       Rita
+science                                            76
+
+1005       Satyam
+mechanics                                          87
+
+1006       Shruti
+geography                                          60
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1007       Chirag
+dbms                                               75
+
+1008       Allu
+cybersecurity                                      65
+
+1009       Tom
+ai                                                 81
+
+
+9 rows selected.
+
+SQL> select cse.rollnumber,cse.name,marks.subject,marks.marks from cse right join marks on cse.rollnumber=marks.rno;
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1006       Shruti
+geography                                          60
+
+1007       Chirag
+dbms                                               75
+
+1008       Allu
+cybersecurity                                      65
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1009       Tom
+ai                                                 81
+
+1001       Parthib
+arts                                               45
+
+1002       Chris
+computers                                          70
+
+
+ROLLNUMBER NAME
+---------- --------------------------------------------------
+SUBJECT                                            MARKS
+-------------------------------------------------- ----------
+1003       Scarlet
+liberal arts                                       56
+
+1004       Rita
+science                                            76
+
+1005       Satyam
+mechanics                                          87
+
+
+9 rows selected.
+
+SQL> select rollnumber from cse union select rno from marks;
+
+ROLLNUMBER
+----------
+1001
+1002
+1003
+1004
+1005
+1006
+1007
+1008
+1009
+
+9 rows selected.
+
+SQL> select rollnumber from cse intersect select rno from marks;
+
+ROLLNUMBER
+----------
+1001
+1002
+1003
+1004
+1005
+1006
+1007
+1008
+1009
+
+9 rows selected.
+
+SQL> select rollnumber from cse minus select rno from marks;
+
+no rows selected
+
+SQL> create table data(rno varchar(10));
+
+Table created.
+
+SQL> insert into data values('1001');
+
+1 row created.
+
+SQL> insert into data values('1005');
+
+1 row created.
+
+SQL> insert into data values('1008');
+
+1 row created.
+
+SQL> select rno from cse minus select rno from marks1;
+select rno from cse minus select rno from marks1
+       *
+ERROR at line 1:
+ORA-00904: "RNO": invalid identifier
+
+
+SQL> select rollnumber from cse minus select rno from marks;
+
+no rows selected
+
+SQL> select rollnumber from cse minus select rno from marks1;
+select rollnumber from cse minus select rno from marks1
+                                                 *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select rollnumber from cse minus select rno from data;
+
+ROLLNUMBER
+----------
+1002
+1003
+1004
+1006
+1007
+1009
+
+6 rows selected.
+
+SQL> select rollnumber from cse intersect select rno from data;
+
+ROLLNUMBER
+----------
+1001
+1005
+1008
+
+SQL> select rollnumber from cse union select rno from data;
+
+ROLLNUMBER
+----------
+1001
+1002
+1003
+1004
+1005
+1006
+1007
+1008
+1009
+
+9 rows selected.
